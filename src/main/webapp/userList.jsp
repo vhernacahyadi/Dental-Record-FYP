@@ -123,13 +123,13 @@ body {
 					String data;
 
 					if (query != null) {
-						data = "select * from users where accessLevel<4 AND username like '%" + query + "%' or accessLevel<4 AND useremail like '%" + query
+						data = "select * from users where accessLevel<5 AND username like '%" + query + "%' or accessLevel<5 AND useremail like '%" + query
 						+ "%'";
 					} else
-						data = "select * from users WHERE accessLevel<4 ORDER by iduserAccounts asc";
+						data = "select * from users WHERE accessLevel<5 ORDER by iduserAccounts asc";
 					rs = stat.executeQuery(data);
 					if (rs.next() != true) {
-						data = "select * from users WHERE accessLevel<4 ORDER by iduserAccounts asc";
+						data = "select * from users WHERE accessLevel<5 ORDER by iduserAccounts asc";
 						rs = stat.executeQuery(data);
 				%>
 				<input type="hidden" id="status" value="error">
