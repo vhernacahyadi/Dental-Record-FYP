@@ -126,7 +126,7 @@ p.title{
 							<span class="label-input100"><i
 								class="zmdi zmdi-account material-icons-name"></i></span> <input
 								class="input100" readonly type="text" name="name" id="name"
-								value=<%=rs.getString(2)%> > 
+								value="<%=rs.getString(2)%>" > 
 								<span class="focus-input100"></span>
 						</div>
 
