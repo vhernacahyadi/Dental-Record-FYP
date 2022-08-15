@@ -170,7 +170,7 @@ body {
 						</div>
 
 						<p>
-							<b>Password:</b>
+							<b>Mobile No.:</b>
 						</p>
 						<div class="wrap-input100 validate-input"
 							data-validate="Password is required">
