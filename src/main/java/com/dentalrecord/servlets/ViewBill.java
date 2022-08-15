@@ -136,7 +136,7 @@ public class ViewBill extends HttpServlet {
 			
 			System.out.print(query);
 			
-			PreparedStatement pst = conn.prepareStatement(query);
+			PreparedStatement pst = conn.prepareStatement(query + " AND clinicId = " + clinicId);
 			int paramIndex = 1;
 			if (!ViewBill.isEmpty(fromDate) || !ViewBill.isEmpty(toDate)) {
 				pst.setString(paramIndex++, toDate);
