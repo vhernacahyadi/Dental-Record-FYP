@@ -126,7 +126,7 @@ body {
 							<span class="label-input100"><i
 								class="zmdi zmdi-account material-icons-name"></i></span> <input
 								class="input100" type="text" name="name" id="name"
-								value=<%=rs.getString(2)%> placeholder="Enter name"> <span
+								value="<%=rs.getString(2)%>" placeholder="Enter name"> <span
 								class="focus-input100"></span>
 						</div>
 						
