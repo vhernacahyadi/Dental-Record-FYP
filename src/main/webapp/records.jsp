@@ -133,10 +133,7 @@ body {
 						<tr>
 							<th style="width:5%;">Appointment ID</th>
 							<th style="width:15%;">Doctor Name</th>
-							<th style="width:25%;">Description</th>
 							<th style="width:20%;">Services</th>
-							<th style="width:15%;">Type of Medicare</th>
-							<th style="width:10%;">Exp Date of Material</th>
 							<th style="width:10%;">Date of Appointment</th>
 						</tr>
 						<%
@@ -146,10 +143,7 @@ body {
 						<tr class="patient-row">
 							<td><%=rss.getInt(1)%></td>
 							<td><%=rss.getString(2)%></td>
-							<td><%=rss.getString(3)%></td>
 							<td><%=rss.getString(4)%></td>
-							<td><%=rss.getString(5)%></td>
-							<td><%=rss.getString(6)%></td>
 							<td><%=rss.getString(7)%></td>
 						</tr>
 
