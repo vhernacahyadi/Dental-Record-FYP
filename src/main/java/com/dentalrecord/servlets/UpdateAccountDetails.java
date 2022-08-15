@@ -68,7 +68,7 @@ public class UpdateAccountDetails extends HttpServlet {
 					response.sendRedirect("mainMenuAdmin.jsp");
 				} else if(rs.getInt("accessLevel") == 2) {
 					PreparedStatement pst2 = conn.prepareStatement("UPDATE users set username=?,password=?,useremail=? WHERE iduserAccounts="+id);
-					pst2.setString(1, rs.getString("username"));
+					pst2.setString(1, uname);
 					pst2.setString(2, pw);
 					pst2.setString(3, uemail);
 					pst2.executeUpdate();
@@ -76,7 +76,7 @@ public class UpdateAccountDetails extends HttpServlet {
 					response.sendRedirect("mainMenuDentist.jsp");
 				}else if(rs.getInt("accessLevel") == 3) {
 					PreparedStatement pst2 = conn.prepareStatement("UPDATE users set username=?,password=?,useremail=? WHERE iduserAccounts="+id);
-					pst2.setString(1, rs.getString("username"));
+					pst2.setString(1, uname);
 					pst2.setString(2, pw);
 					pst2.setString(3, uemail);
 					pst2.executeUpdate();
@@ -84,7 +84,7 @@ public class UpdateAccountDetails extends HttpServlet {
 					response.sendRedirect("mainMenuAssit.jsp");
 				}else if(rs.getInt("accessLevel") == 4) {
 					PreparedStatement pst2 = conn.prepareStatement("UPDATE users set username=?,password=?,useremail=? WHERE iduserAccounts="+id);
-					pst2.setString(1, rs.getString("username"));
+					pst2.setString(1, uname);
 					pst2.setString(2, pw);
 					pst2.setString(3, uemail);
 					pst2.executeUpdate();
