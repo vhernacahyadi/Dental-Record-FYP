@@ -125,16 +125,21 @@ body {
 					stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 					String query = request.getParameter("search");
 					String data;
-
-					if (query != null) {
-						data = "select * from customer where name like '%" + query + "%' or address like '%" + query
-						+ "%' or email like '%" + query + "%'";
-					} else
-						data = "select * from customer ORDER by idcustomer asc";
+					
+					if (query != null) 
+					{
+							data = "select * from customer where name like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + 
+									"%' OR address like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + 
+									"%' OR email like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + "%'";
+						
+					} 
+					else
+						data = "select * from customer where clinicId like '%" + (int)session.getAttribute("clinicId") + "%' ORDER BY idcustomer asc";
 					rs = stat.executeQuery(data);
-					if (rs.next() != true) {
-						data = "select * from customer ORDER by idcustomer asc";
-						rs = stat.executeQuery(data);
+					if (rs.next() != true) 
+					{
+							data = "select * from customer where clinicId like '%" + (int)session.getAttribute("clinicId") + "%' ORDER BY idcustomer asc";
+							rs = stat.executeQuery(data);
 				%>
 				<input type="hidden" id="status" value="error">
 				<%
