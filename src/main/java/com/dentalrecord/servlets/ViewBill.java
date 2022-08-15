@@ -95,7 +95,7 @@ public class ViewBill extends HttpServlet {
 		return str == null || "".equals(str.trim());
 	}
 
-	private List<PaymentDetails> queryData(String fromDate, String toDate, String col1, String paymentStatus, String... ids)
+	private List<PaymentDetails> queryData(String fromDate, String toDate, String col1, String paymentStatus, String clinicId, String... ids)
 			throws ServletException {
 		List<PaymentDetails> paymentDetails = new ArrayList<>();
 		Connection conn;
@@ -104,11 +104,19 @@ public class ViewBill extends HttpServlet {
 		
 		try {
 			
+			
+			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_NAME + "?useSSL=false", DATABASE_USER,
 					DATABASE_PASSWORD);
-			String query = "SELECT * from " + ViewBill.TABLE_NAME + " where 1=1";
+			
+			
+			
+			String query = "SELECT * from " + ViewBill.TABLE_NAME + " where 1=1 ";
+			
+			
+			
 			
 			if (!ViewBill.isEmpty(fromDate) || !ViewBill.isEmpty(toDate))
 				query += " AND DATE(" + DATE_COLUMN_NAME + ") <= STR_TO_DATE(?, '" + DATE_FORMAT + "') AND DATE("
@@ -118,13 +126,15 @@ public class ViewBill extends HttpServlet {
 				query += " AND " + OTHER_FILTER_COLUMN_NAME + " LIKE '%" + col1 + "%' ";
 			
 			if (!ViewBill.isEmpty(paymentStatus))
-				query += " AND status = '" + paymentStatus + "'";
+				query += " AND status = '" + paymentStatus + "'" + " AND clinicId = " + clinicId;
 			
 			if (ids != null && ids.length > 0) {
 				query += " AND idbillHistory IN (";
 				query += String.join(",", ids);
 				query += ") " ;
 			}
+			
+			System.out.print(query);
 			
 			PreparedStatement pst = conn.prepareStatement(query);
 			int paramIndex = 1;
@@ -244,19 +254,25 @@ public class ViewBill extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
+		int clinicId1 = Integer.valueOf(session.getAttribute("clinicId").toString());
 		
+		String clinicId = Integer.toString(clinicId1);
 		String paymentStatus = request.getParameter("paymentStatus");
 		String fromDateStr = request.getParameter("fromDate");
 		String toDateStr = request.getParameter("toDate");
 		String col1 = request.getParameter("col1");
 		String[] strings = request.getParameterValues("includeList");
+		
 		if (strings != null)
-			this.sendMail(request, response, this.queryData(null, null, null, null, strings));
+			this.sendMail(request, response, this.queryData(null, null, null, null, null, strings));
 		request.setAttribute("fromDate", fromDateStr);
 		request.setAttribute("toDate", toDateStr);
 		request.setAttribute("col1", col1);
 		request.setAttribute("paymentStatus", paymentStatus);
-		request.setAttribute("list", queryData(fromDateStr, toDateStr, col1, paymentStatus));
+		request.setAttribute("clinicId", clinicId);
+		request.setAttribute("list", queryData(fromDateStr, toDateStr, col1, paymentStatus, clinicId));
 		
 		
 		if(isEmailSent)
