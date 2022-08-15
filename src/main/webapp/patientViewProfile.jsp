@@ -131,7 +131,7 @@ body {
 							data-validate="Valid email is required: ex@abc.xyz">
 							<span class="label-input100"><i class="zmdi zmdi-account material-icons-name"></i></span>
 							<input class="input100" type="email" name="email" id="email"
-								value=<%=rs.getString(2)%> disabled> <span
+								value="<%=rs.getString(2)%>" disabled> <span
 								class="focus-input100"></span>
 						</div>
 						
