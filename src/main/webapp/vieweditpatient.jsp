@@ -43,7 +43,7 @@ body {
 #delete-form {
 	padding:0;
 	position:absolute;
-	bottom:3.2%;
+	bottom:5%;
 	left:55%;
 }
 

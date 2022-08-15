@@ -195,19 +195,19 @@ p{
 									<span>12:00 pm</span>
 								</div>
 								<div class="timeslot-content">
-									<span>13:00 pm</span>
+									<span>01:00 pm</span>
 								</div>
 								<div class="timeslot-content">
-									<span>14:00 pm</span>
+									<span>02:00 pm</span>
 								</div>
 								<div class="timeslot-content">
-									<span>15:00 pm</span>
+									<span>03:00 pm</span>
 								</div>
 								<div class="timeslot-content">
-									<span>16:00 pm</span>
+									<span>04:00 pm</span>
 								</div>
 								<div class="timeslot-content">
-									<span>17:00 pm</span>
+									<span>05:00 pm</span>
 								</div>
 								
 							</div>
