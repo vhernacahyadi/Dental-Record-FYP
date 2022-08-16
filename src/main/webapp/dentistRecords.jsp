@@ -119,6 +119,7 @@ body {
 					ResultSet rs = null;
 					String id = request.getParameter("id");
 					String query = request.getParameter("search");
+					String clinicId = session.getAttribute("clinicId").toString();
 					
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection con = DriverManager.getConnection(
@@ -137,7 +138,9 @@ body {
 					
 					if (query != null) 
 					{
-						data = "select custid, appointmentid, docname, services, date, apptime from appointment where services like '%" + query + "%'";
+						data = "select custid, appointmentid, docname, services, date, apptime from appointment where services like '%" 
+					+ query + "%'" + "AND clinicId like '%" + clinicId + 
+					"%'";
 					} 
 					else
 					{
