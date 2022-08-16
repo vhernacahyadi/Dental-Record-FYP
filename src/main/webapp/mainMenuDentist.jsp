@@ -118,6 +118,10 @@ body {
 					Statement stat = null;
 					ResultSet rs = null;
 					int customerid = 1;
+					
+					
+					String clinicId = session.getAttribute("clinicId").toString();
+					System.out.print(clinicId);
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection con = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/dentalrecord?allowPublicKeyRetrieval=true&useSSL=false", "root",
@@ -125,21 +129,21 @@ body {
 					stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 					String query = request.getParameter("search");
 					String data;
-					
-					if (query != null) 
-					{
-							data = "select * from customer where name like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + 
-									"%' OR address like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + 
-									"%' OR email like '%" + query + "%' AND clinicId like '%" + (int)session.getAttribute("clinicId") + "%'";
+
+					if (query != null) {
 						
+						data = "select * from customer where name like '%" + query + "%' AND clinicId like '%" + clinicId + 
+								"%' OR address like '%" + query + "%' AND clinicId like '%" + clinicId + 
+								"%' OR email like '%" + query + "%' AND clinicId like '%" + clinicId + "%'";
+					
 					} 
 					else
-						data = "select * from customer where clinicId like '%" + (int)session.getAttribute("clinicId") + "%' ORDER BY idcustomer asc";
+						data = "select * from customer where clinicId like '%" + clinicId + "%' ORDER BY idcustomer asc";
+					
 					rs = stat.executeQuery(data);
-					if (rs.next() != true) 
-					{
-							data = "select * from customer where clinicId like '%" + (int)session.getAttribute("clinicId") + "%' ORDER BY idcustomer asc";
-							rs = stat.executeQuery(data);
+					if (rs.next() != true) {
+						data = "select * from customer where clinicId like '%" + clinicId + "%' ORDER BY idcustomer asc";
+						rs = stat.executeQuery(data);
 				%>
 				<input type="hidden" id="status" value="error">
 				<%
