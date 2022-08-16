@@ -105,18 +105,18 @@ body {
 						
 						
 						if (query != null) {
-							data = "select appointmentid, docname, description, services, medicare, expdate, date from appointment where (docname like '%"
+							data = "select appointmentid, docname, description, services, medicare, expdate, date,apptime from appointment where (docname like '%"
 							+ query + "%' or description like '%" + query + "%' or date like '%" + query + "%') and custid = " + id
 							+ "";
 						} else
-							data = "select appointmentid, docname, description, services, medicare, expdate, date from appointment where date < CURDATE() AND custid = "
+							data = "select appointmentid, docname, description, services, medicare, expdate, date,apptime from appointment where date < CURDATE() AND custid = "
 							+ id + "";
 						
 						System.out.println("bro " + data);
 						rss = stats.executeQuery(data);
 						
 						if (rss.next() != true) {
-							data = "select appointmentid, docname, description, services, medicare, expdate, date from appointment where date < CURDATE() AND custid = "
+							data = "select appointmentid, docname, description, services, medicare, expdate, date,apptime from appointment where date < CURDATE() AND custid = "
 							+ id + "";
 							rss = stats.executeQuery(data);
 					%>
@@ -135,6 +135,7 @@ body {
 							<th style="width:15%;">Doctor Name</th>
 							<th style="width:20%;">Services</th>
 							<th style="width:10%;">Date of Appointment</th>
+							<th style="width:10%;">Time of Appointment</th>
 						</tr>
 						<%
 						do {
@@ -145,6 +146,7 @@ body {
 							<td><%=rss.getString(2)%></td>
 							<td><%=rss.getString(4)%></td>
 							<td><%=rss.getString(7)%></td>
+							<td><%=rss.getString(8)%></td>
 						</tr>
 
 						<%
