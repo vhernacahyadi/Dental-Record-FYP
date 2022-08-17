@@ -359,7 +359,7 @@ body {
 		// Sweet Alert for deletion
 		deleteBtn.addEventListener('click', function(e){
 			e.preventDefault();
-			let deleteForm = document.getElementById("deleteForm");
+			let deleteForm = document.getElementById("delete-form");
 			swal({
 	            title: "Warning!",
 	            text: "Are you sure you want to delete this user?", 

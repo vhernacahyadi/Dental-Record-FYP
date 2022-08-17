@@ -116,7 +116,7 @@ p.title{
 	<%
 	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dentalrecord?useSSL=false", "root", "passwordroot");
 	Statement stmt;
-	ResultSet rs;
+	ResultSet rs, rs2;
 	String id = request.getParameter("id");
 	
 	try {
@@ -127,7 +127,7 @@ p.title{
 		rs = stmt.executeQuery(sql);
 
 		while (rs.next()) {
-			
+		String patientId = rs.getString(1);
 			
 	%>
 	<section>
@@ -150,7 +150,7 @@ p.title{
 							<span class="label-input100"><i
 								class="zmdi zmdi-account material-icons-name"></i></span> <input
 								class="input100" readonly type="text" name="name" id="name"
-								value="<%=rs.getString(2)%>" > 
+								value=<%=rs.getString(2)%> > 
 								<span class="focus-input100"></span>
 						</div>
 						
@@ -200,7 +200,48 @@ p.title{
 							<span class="focus-input100"></span>
 						</div>
 
+						<p><b>Historical Records:</b></p>
 						<%
+						Statement stmt2 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+						String sql2 = "select history, historyDate, description from historicalrecords where idcustomer = " + patientId;
+						
+						rs2 = stmt2.executeQuery(sql2);
+						
+						if(rs2.next() != true){
+						%>
+							<p> No records found. </p>
+						<% 
+						}
+						else{
+							rs2.beforeFirst();
+							while (rs2.next()) {
+								System.out.println(rs2.getString(1));
+								System.out.println(rs2.getString(2));
+								System.out.println(rs2.getString(3));
+						%>
+							<table border="1" class="table table-sm" id="patient-table">
+								<tr>
+									<th style="width: 30%;">History</th>
+									<th style="width: 45%;">Description</th>
+									<th style="width: 25%;">Date</th>
+								</tr>
+						<%
+								do {
+						%>
+									<tr class="patient-row">
+										<td><%=rs2.getString(1)%></td>
+										<td><%=rs2.getString(3)%></td>
+										<td><%=rs2.getString(2)%></td>
+									</tr>
+						<%			
+								}while (rs2.next());
+						%>
+							</table>
+						<% 
+							}
+						}
+						
+						
 						Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 						String data;
 						String id2 = request.getParameter("appid");
@@ -354,8 +395,49 @@ p.title{
 	<!-- jquery CDN -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- JS -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
 		$("document").ready(function(){
+			$("#pagination-container").after('<div id="pages" class="mb-2"></div>');
+			var rowsShown = 7;
+			var rowsTotal = $("#patient-table tbody tr.patient-row").length;
+			var numPages = rowsTotal/rowsShown;
+			
+			if(rowsTotal > 0){
+				$("#delete-form").css("bottom", "2.3%");
+			}
+			
+			for(let i = 0; i < numPages; i++){
+				pageNo = i + 1;
+				$("#pages").append('<a href="#record-heading" rel="' + i + '">' + pageNo + '</a>');
+			}
+			
+			$("#patient-table tbody tr.patient-row").hide();
+			$("#patient-table tbody tr.patient-row").slice(0, rowsShown).show();
+			$("#pages a:first").addClass("active");
+			$("#pages a").bind('click', function(){
+				$("#pages a").removeClass("active");
+				$(this).addClass("active");
+				let currPage = $(this).attr("rel");
+				let startItem = currPage * rowsShown;
+				let endItem = startItem + rowsShown;
+				
+				$("#patient-table tbody tr.patient-row").css("opacity", "0.0").hide().slice(startItem, endItem).css("display", "table-row").animate({opacity:1}, 300);
+				
+			});
+			
+			$(".add-family-btn").on('click', function(e){
+				
+				console.log(this.value);
+			});
+		});
+	</script>
+		
+	<script>
+		$("document").ready(function(){
+			
 			
 			var rowsShown = 7;
 			
