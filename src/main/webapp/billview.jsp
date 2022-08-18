@@ -14,6 +14,8 @@ try {
 } catch (Exception ex) {
 	out.println(ex);
 }
+
+
 %>
 
 <!DOCTYPE html>
@@ -95,7 +97,8 @@ label {
 
 				<form id="formId" action="billview" class="w-100 d-flex">
 
-					<input type="hidden" id="status" name="status" value="${status}">
+					<input type="hidden" id="status"
+		value="<%=request.getAttribute("status")%>">
 					<label for="birthday">From</label> <input type="date" id="idFrom"
 						class="mx-3 px-2 border rounded" name="fromDate"
 						value="${fromDate}" onchange="onDateChange()"> <label
@@ -233,9 +236,14 @@ label {
 			swal("Success", 
 				"Successfully sent bill(s)!", 
 				"success"
-				);
+				).then((placeholder) => {
+					window.location.href = "mainMenuAdmin.jsp";
+					
+				});
+			
 		}
 		
+
 	</script>
 	
 </body>
