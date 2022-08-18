@@ -173,11 +173,6 @@ body {
 								class="zmdi zmdi-account material-icons-name"></i></label> <input
 								type="text" name="id" id="id" value=<%=rs.getString(1)%> />
 						</div>
-						<div class="container-contact100-form-btn">
-							<button class="btn-danger">
-								<span> Delete </span>
-							</button>
-						</div>
 					</form>
 				</div>
 			</div>
