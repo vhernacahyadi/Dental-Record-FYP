@@ -43,8 +43,6 @@ public class ViewBill extends HttpServlet {
 	private static final EMAIL_CONFIGS fromEmailProvider = EMAIL_CONFIGS.HOTMAIL;
 	private static final String DATE_FORMAT = "%Y-%m-%d";
 	
-	
-	
 	private boolean isEmailSent = false;
 
 	private enum EMAIL_CONFIGS {
@@ -101,9 +99,6 @@ public class ViewBill extends HttpServlet {
 			throws ServletException {
 		List<PaymentDetails> paymentDetails = new ArrayList<>();
 		Connection conn;
-		
-		
-		
 		
 		try {
 			
@@ -247,11 +242,7 @@ public class ViewBill extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
-		
-		
-		
+		isEmailSent = false;
 		HttpSession session = request.getSession();
 		int clinicId1 = Integer.valueOf(session.getAttribute("clinicId").toString());
 		String clinicId = Integer.toString(clinicId1);
@@ -272,15 +263,9 @@ public class ViewBill extends HttpServlet {
 		request.setAttribute("list", queryData(fromDateStr, toDateStr, col1, paymentStatus, clinicId));
 		
 		
-		if(isEmailSent) {
+		if(isEmailSent)
 			request.setAttribute("status", "success");
-			
-		request.getRequestDispatcher("/mainMenuAdmin.jsp").forward(request, response);
-		}
 		
-		else
-		{
-			request.getRequestDispatcher("/billview.jsp").forward(request, response);
-		}
-		}
+		request.getRequestDispatcher("/billview.jsp").forward(request, response);
 	}
+}
