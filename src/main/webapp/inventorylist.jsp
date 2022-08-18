@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Patient List</title>
+<title>Inventory List</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -36,149 +36,6 @@ body {
 	background-size: cover;
 }
 
-.serchbar {
-	width: 60%;
-	height: 5%;
-	margin-top: 2%;
-	margin-left: 100px;
-	margin-bottom: 0%;
-}
-
-.search {
-	width: 40%;
-	height: 40px;
-	border-radius: 10px;
-}
-
-.text-center {
-	color: grey;
-	padding: 10px;
-	margin-top: 0px;
-}
-
-input {
-	text-align: center;
-}
-
-::-webkit-input-placeholder {
-	text-align: center;
-}
-
-:-moz-placeholder {
-	text-align: center;
-}
-
-.mybutton {
-	display: inline;
-}
-
-#test {
-	min-height: 500px;
-}
-
-#patient-table tr.patient-row {
-	display: none;
-}
-
-#pages {
-	padding: 10px;
-	text-align: center;
-}
-
-#pages a {
-	color: white;
-	background-color: #2a6670;
-	margin: 5px 10px;
-	padding: 5px;
-	text-decoration: none;
-}
-
-#pages a.active {
-	color: white;
-	background-color: #6ac4c0;
-}
-
-#logout {
-	width: 150px
-}
-
-.button {
-	background: #6dabe4;
-	border: none;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	cursor: pointer;
-	border-radius: 8px;
-	transition: 0.3s
-}
-
-.button:hover {
-	background: #4292dc;
-	color: white;
-}
-
-.dropbtn {
-	color: white;
-	font-size: 16px;
-	border: none;
-	padding: 0;
-	margin: 0;
-	width: 160px;
-	display: inline-block;
-	text-align: center;
-	cursor: pointer;
-}
-
-#avatar {
-	width: 60px;
-	height: 60px;
-}
-
-.dropdown {
-	position: relative;
-	display: inline-block;
-}
-
-.dropdown-content {
-	transition: opacity 1s ease;
-	opacity: 0;
-	height: 0;
-	overflow: hidden;
-	position: absolute;
-	background-color: #f1f1f1;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
-	transition: 0.2s;
-	text-align: center;
-}
-
-.dropdown-content a {
-	color: #2c3e50;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-	transition: 0.3s ease;
-}
-
-#logoutBtn:hover {
-	color: red;
-	cursor: pointer;
-}
-
-.dropdown-content a:hover {
-	background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-	opacity: 1;
-	height: auto;
-}
 </style>
 </head>
 
@@ -350,12 +207,6 @@ input {
 	<script src="js/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
-		const logoutBtn = document.getElementById("logoutAnchor");
-		const modalLogoutBtn = document.getElementById("modalLogout");
-		const modal = document.getElementById("logoutModal");
-		const closeBtn = document.getElementById("close");
-		const dropdownContent = document.getElementsByClassName("dropdown-content");
-		
 		function recordNotFound() {
 			document.getElementById("labelFound").innerText = "Record not found!";
 		}
@@ -367,23 +218,6 @@ input {
 			swal("Sorry","No record(s) found!","error");
 		}
 		
-		console.log(document.getElementById("logoutAnchor"));
-		console.log(logoutBtn);
-		modalLogoutBtn.addEventListener("click", (e) => {
-		    window.location.href = 'login.jsp';
-		});
-		
-		//logout function
-		logoutBtn.addEventListener("click", function(){
-			modal.style.visibility = "visible";
-			console.log(dropdownContent[0])
-			dropdownContent[0].opacity = 0;
-		});
-		
-		closeBtn.addEventListener("click", function(){
-			modal.style.visibility = "hidden";
-		});
-	
 	</script>
 </body>
 </html>
