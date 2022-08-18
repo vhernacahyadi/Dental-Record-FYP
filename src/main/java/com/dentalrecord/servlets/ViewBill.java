@@ -43,6 +43,8 @@ public class ViewBill extends HttpServlet {
 	private static final EMAIL_CONFIGS fromEmailProvider = EMAIL_CONFIGS.HOTMAIL;
 	private static final String DATE_FORMAT = "%Y-%m-%d";
 	
+	
+	
 	private boolean isEmailSent = false;
 
 	private enum EMAIL_CONFIGS {
@@ -100,33 +102,26 @@ public class ViewBill extends HttpServlet {
 		List<PaymentDetails> paymentDetails = new ArrayList<>();
 		Connection conn;
 		
-
+		
+		
 		
 		try {
-			
-			
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_NAME + "?useSSL=false", DATABASE_USER,
 					DATABASE_PASSWORD);
-			
-			
-			
-			String query = "SELECT * from " + ViewBill.TABLE_NAME + " where 1=1 ";
-			
-			
-			
+			String query = "SELECT * from " + ViewBill.TABLE_NAME + " where 1=1";
 			
 			if (!ViewBill.isEmpty(fromDate) || !ViewBill.isEmpty(toDate))
 				query += " AND DATE(" + DATE_COLUMN_NAME + ") <= STR_TO_DATE(?, '" + DATE_FORMAT + "') AND DATE("
-						+ DATE_COLUMN_NAME + ") >= STR_TO_DATE(?, '" + DATE_FORMAT + "')"  ;
+						+ DATE_COLUMN_NAME + ") >= STR_TO_DATE(?, '" + DATE_FORMAT + "')" + "AND clinicId =" + clinicId ;
 			
 			if (!ViewBill.isEmpty(col1))
-				query += " AND " + OTHER_FILTER_COLUMN_NAME + " LIKE '%" + col1 + "%' ";
+				query += " AND " + OTHER_FILTER_COLUMN_NAME + " LIKE '%" + col1 + "%' " + "AND clinicId =" + clinicId;
 			
 			if (!ViewBill.isEmpty(paymentStatus))
-				query += " AND status = '" + paymentStatus + "'" + " AND clinicId = " + clinicId;
+				query += " AND status = '" + paymentStatus + "'" + "AND clinicId =" + clinicId;
 			
 			if (ids != null && ids.length > 0) {
 				query += " AND idbillHistory IN (";
@@ -134,9 +129,7 @@ public class ViewBill extends HttpServlet {
 				query += ") " ;
 			}
 			
-			System.out.print(query);
-			
-			PreparedStatement pst = conn.prepareStatement(query + " AND clinicId = " + clinicId);
+			PreparedStatement pst = conn.prepareStatement(query);
 			int paramIndex = 1;
 			if (!ViewBill.isEmpty(fromDate) || !ViewBill.isEmpty(toDate)) {
 				pst.setString(paramIndex++, toDate);
@@ -254,17 +247,21 @@ public class ViewBill extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-
-		int clinicId1 = Integer.valueOf(session.getAttribute("clinicId").toString());
 		
+		
+		
+		
+		
+		HttpSession session = request.getSession();
+		int clinicId1 = Integer.valueOf(session.getAttribute("clinicId").toString());
 		String clinicId = Integer.toString(clinicId1);
 		String paymentStatus = request.getParameter("paymentStatus");
 		String fromDateStr = request.getParameter("fromDate");
 		String toDateStr = request.getParameter("toDate");
 		String col1 = request.getParameter("col1");
-		String[] strings = request.getParameterValues("includeList");
+
 		
+		String[] strings = request.getParameterValues("includeList");
 		if (strings != null)
 			this.sendMail(request, response, this.queryData(null, null, null, null, null, strings));
 		request.setAttribute("fromDate", fromDateStr);
@@ -275,9 +272,15 @@ public class ViewBill extends HttpServlet {
 		request.setAttribute("list", queryData(fromDateStr, toDateStr, col1, paymentStatus, clinicId));
 		
 		
-		if(isEmailSent)
+		if(isEmailSent) {
 			request.setAttribute("status", "success");
+			
+		request.getRequestDispatcher("/mainMenuAdmin.jsp").forward(request, response);
+		}
 		
-		request.getRequestDispatcher("/billview.jsp").forward(request, response);
+		else
+		{
+			request.getRequestDispatcher("/billview.jsp").forward(request, response);
+		}
+		}
 	}
-}
